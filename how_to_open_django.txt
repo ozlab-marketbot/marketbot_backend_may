@@ -1,0 +1,11 @@
+
+marketbot 접속
+python -m venv venv
+.\venv\Scripts\activate
+
+python manage.py runserver
+
+
+admin id: admin
+pw: admin
+
