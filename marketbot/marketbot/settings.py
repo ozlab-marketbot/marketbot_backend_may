@@ -132,3 +132,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True  # 개발 중엔 이렇게 허용
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 50,  # 기본값이지만...
+    'PAGE_QUERY_PARAM': 'page',
+    'PAGE_SIZE_QUERY_PARAM': 'page_size',  # 👉 이걸 반드시 추가해야 클라이언트에서 설정 가능
+    'MAX_PAGE_SIZE': 1000
+}
+

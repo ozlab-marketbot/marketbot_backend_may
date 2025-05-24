@@ -3,20 +3,21 @@ import bcrypt
 import pybase64
 import requests
 import json
+
 from django.http import JsonResponse
-from .models import StoreProduct 
-from apikey import config 
 from rest_framework import viewsets
 from .models import StoreProduct
-from .serializers import StoreProductSerializer
-class StoreProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = StoreProduct.objects.all()
+from .serializers import StoreProductSerializer  # serializers.py에 있어야 함
+from apikey import config
+
+
+class StoreProductViewSet(viewsets.ModelViewSet):
+    queryset = StoreProduct.objects.all().order_by('-id')
     serializer_class = StoreProductSerializer
 
 
 def fetch_storefarm_products(request):
     try:
-        # 🔐 1. 토큰 발급
         client_id = config["CLIENT_ID"]
         client_secret = config["CLIENT_SECRET"]
         timestamp = int(time.time() * 1000)
@@ -43,7 +44,6 @@ def fetch_storefarm_products(request):
         if not access_token:
             return JsonResponse({"error": "토큰 발급 실패", "detail": token_json}, status=500)
 
-        # 🛍️ 2. 상품 요청 반복 수집
         saved = 0
         page = 1
         page_size = 100
@@ -87,23 +87,14 @@ def fetch_storefarm_products(request):
 
                     print(f"▶ 저장: {pid} | {name} | {price}")
 
-                    Product.objects.update_or_create(
-                        productId=pid,
+                    StoreProduct.objects.update_or_create(
+                        channel_product_no=pid,
                         defaults={
-                            "title": name,
-                            "lprice": str(price),
-                            "stockQuantity": stock,
-                            "productType": status,
-                            "brand": "",
-                            "maker": "",
-                            "image": "",
-                            "link": "",
-                            "hprice": "",
-                            "mallName": "",
-                            "category1": "",
-                            "category2": "",
-                            "category3": "",
-                            "category4": ""
+                            "origin_product_no": origin_no,
+                            "name": name,
+                            "price": price,
+                            "stock": stock,
+                            "status": status
                         }
                     )
                     saved += 1
