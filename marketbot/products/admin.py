@@ -1,8 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin  # ✅ 이 줄을 꼭 추가해야 함
+from .models import StoreProduct
 
-# Register your models here.
-# products/admin.py
-from django.contrib import admin
-from .models import Product
-
-admin.site.register(Product)
+@admin.register(StoreProduct)
+class StoreProductAdmin(admin.ModelAdmin):
+    list_display = ('channel_product_no', 'name', 'price', 'stock', 'status')

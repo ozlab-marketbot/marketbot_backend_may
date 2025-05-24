@@ -79,10 +79,15 @@ WSGI_APPLICATION = 'marketbot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'marketbot_stocks',     # 방금 만든 DB 이름
+        'USER': 'postgres',             # PostgreSQL 로그인 ID (기본값: postgres)
+        'PASSWORD': 'marketbot',        # 설치할 때 설정한 PostgreSQL 비밀번호
+        'HOST': 'localhost',            # 로컬에서 실행 중이므로 localhost
+        'PORT': '5432',                 # PostgreSQL 기본 포트
     }
 }
+
 
 
 # Password validation
