@@ -17,3 +17,6 @@ django로 프론트엔드에 연결 가능합니다
 id 찾아서 데이터 가져오는거 구현했습니다 - readOrder_oneProduct.py
 전체 상품을 csv로 가져오는거 구현했습니다 goat - readOrder.py
 아 그리고 API 특수코드 그냥 가져오는 시스템도 구현되었습니다 - readOrder.py
+
+5/24
+네이버랑 django랑 연결되었습니다 ㅠㅠㅠㅠ 감동임 ㄹㅇ루 캥거루 - fetchproducts.py
